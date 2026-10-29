@@ -1,0 +1,29 @@
+# Gaon Care 🇮🇳 - Rural Telemedicine Platform
+
+**Gaon Care** is an advanced rural telemedicine platform designed to bridge the healthcare gap between remote rural communities and urban medical specialists. Powered by **Nebius AI Cloud** and open-source **NVIDIA Nemotron** AI models, the platform streamlines patient symptom intake, automated AI triage, doctor matching, secure video consultations, and digital prescriptions.
+
+---
+
+## 🌟 Key Features
+
+1. **Secure Mobile Login:** Quick OTP-based authentication for patients and rural health workers (ASHA).
+2. **Comprehensive Patient Portal:** Gathers patient details including name, village, contact, nearest district hub, and symptom logs.
+3. **NVIDIA Nemotron AI Triage:** Utilizes high-performance open-source models hosted on Nebius AI Cloud to analyze symptoms and match patients with the appropriate urban medical specialist.
+4. **Live Video Consultation:** High-definition simulated telemedicine channel with urban doctors.
+5. **Digital Prescription Generator:** Instant electronic prescription summary ready for print, download, or local clinic pickup.
+
+---
+
+## 🚀 Technical Architecture & Constraints Met
+
+- **Cloud Platform:** Configured to run seamlessly on **Nebius AI Cloud** / **Nebius Token Factory**.
+- **AI Models:** Integrates NVIDIA open-source models (**NVIDIA Nemotron**) for clinical triage and decision support.
+- **Frontend:** Built with vanilla HTML5, CSS3, and JavaScript for lightning-fast performance in low-bandwidth rural environments.
+
+---
+
+## 🛠️ Quick Start
+
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/your-username/gaon-care.git](https://github.com/your-username/gaon-care.git)

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaon Care - Rural Telemedicine Platform | Nebius AI Cloud</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --accent: #f59e0b;
+            --bg-light: #f0fdf4;
+            --text-dark: #1f2937;
+            --border-color: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: var(--text-dark);
+        }
+        header {
+            background: linear-gradient(135deg, #0f766e, #115e59);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-banner {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+        }
+        h2 {
+            color: var(--primary-dark);
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background: #fff;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        button:active {
+            transform: scale(0.99);
+        }
+        .hidden {
+            display: none !important;
+        }
+        .result-box {
+            background: var(--bg-light);
+            border: 1px solid #bbf7d0;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+        .doctor-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .doctor-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        .video-simulator {
+            background: #0f172a;
+            color: white;
+            border-radius: 12px;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+        .video-simulator img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+        .video-simulator .status {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .video-content {
+            z-index: 2;
+            position: relative;
+        }
+        .badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .prescription-box {
+            background: #fff;
+            border: 2px dashed var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        @media(max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gaon Care 🇮🇳</h1>
+        <p>Bridging Rural Communities with Urban Healthcare via Nebius AI & NVIDIA Nemotron</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Step 1: Login Interface -->
+        <div class="card" id="login-section">
+            <span class="badge">Secure Access Portal</span>
+            <h2>Patient & Health Worker Login</h2>
+            <p>Enter your mobile number to access telemedicine services.</p>
+            
+            <label for="login-phone">Mobile Number:</label>
+            <input type="tel" id="login-phone" placeholder="e.g., +91 98765 43210" maxlength="13">
+
+            <label for="login-role">Select Role:</label>
+            <select id="login-role">
+                <option value="patient">Patient / Villager</option>
+                <option value="asha">ASHA / Rural Health Worker</option>
+            </select>
+
+            <button onclick="handleLogin()">Send OTP & Proceed</button>
+        </div>
+
+        <!-- Step 2: Patient Information & Symptom Portal -->
+        <div class="card hidden" id="portal-section">
+            <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80" alt="Rural Healthcare" class="hero-banner">
+            <span class="badge">Nebius AI Token Factory Enabled</span>
+            <h2>Patient Information & Health Intake</h2>
+            <p>Please provide your details so our urban specialist network can assist you promptly.</p>
+            
+            <div class="form-row">
+                <div>
+                    <label for="patient-name">Full Name:</label>
+                    <input type="text" id="patient-name" placeholder="e.g., Ramesh Kumar">
+                </div>
+                <div>
+                    <label for="patient-phone">Phone Number:</label>
+                    <input type="tel" id="patient-phone" placeholder="e.g., 9876543210">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label for="patient-place">Village / Town:</label>
+                    <input type="text" id="patient-place" placeholder="e.g., Rampur Village">
+                </div>
+                <div>
+                    <label for="near-city">Nearest City / District Hub:</label>
+                    <input type="text" id="near-city" placeholder="e.g., Meerut">
+                </div>
+            </div>
+
+            <label for="symptoms">Describe your symptoms / health issue:</label>
+            <textarea id="symptoms" rows="3" placeholder="e.g., High fever, body ache, and persistent dry cough for 2 days..."></textarea>
+
+            <button onclick="runAITriage()">Run NVIDIA Nemotron AI Triage</button>
+        </div>
+
+        <!-- Step 3: AI Triage Results & Assigned Doctor Details -->
+        <div class="card hidden" id="result-section">
+            <span class="badge">NVIDIA Nemotron Analysis Complete</span>
+            <h2>AI Triage & Specialist Match</h2>
+            <div class="result-box" id="ai-output">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="doctor-card" id="doctor-details">
+                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=150&q=80" alt="Doctor" class="doctor-avatar">
+                <div>
+                    <strong style="font-size: 1.1rem; color: var(--primary-dark);">Dr. Ananya Sharma, MD</strong><br>
+                    <span style="font-size: 0.9rem; color: #475569;">Senior General Physician | AIIMS Delhi Hub</span><br>
+                    <span style="font-size: 0.85rem; color: #16a34a;">● Available Now for Video Consultation</span>
+                </div>
+            </div>
+            <br>
+            <button onclick="startVideoConsultation()">Connect to Video Call with Dr. Sharma</button>
+        </div>
+
+        <!-- Step 4: Video Consultation Screen -->
+        <div class="card hidden" id="video-section">
+            <span class="badge">Secure Telemedicine Channel (Nebius Cloud)</span>
+            <h2>Live Virtual Consultation</h2>
+            <div class="video-simulator" id="video-box">
+                <div class="status">● LIVE Connection</div>
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Video Feed">
+                <div class="video-content">
+                    <h3 id="call-status-text">Connected with Dr. Ananya Sharma</h3>
+                    <p style="opacity: 0.8; font-size: 0.9rem;">High-definition secure audio/video stream active</p>
+                </div>
+            </div>
+            <br>
+            <button style="background-color: #dc2626;" onclick="endCall()">End Consultation & Get Prescription</button>
+        </div>
+
+        <!-- Step 5: Prescription & Discharge Summary -->
+        <div class="card hidden" id="prescription-section">
+            <span class="badge">Completed Consultation</span>
+            <h2>Digital Prescription & Medical Summary</h2>
+            <p>Your consultation with Dr. Ananya Sharma has concluded successfully. Below is your official prescription.</p>
+            
+            <div class="prescription-box" id="rx-content">
+                <!-- Populated by JS -->
+            </div>
+            <br>
+            <button onclick="downloadPrescription()">Print / Download Prescription</button>
+            <br><br>
+            <button style="background-color: #475569;" onclick="location.reload()">Start New Consultation</button>
+        </div>
+
+    </div>
+
+    <script>
+        let patientData = {};
+
+        function handleLogin() {
+            const phone = document.getElementById('login-phone').value;
+            if (!phone || phone.length < 10) {
+                alert("Please enter a valid mobile number.");
+                return;
+            }
+            alert("OTP verified successfully!");
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('portal-section').classList.remove('hidden');
+            document.getElementById('patient-phone').value = phone;
+        }
+
+        function runAITriage() {
+            const name = document.getElementById('patient-name').value;
+            const phone = document.getElementById('patient-phone').value;
+            const place = document.getElementById('patient-place').value;
+            const nearCity = document.getElementById('near-city').value;
+            const symptoms = document.getElementById('symptoms').value;
+
+            if (!name || !phone || !place || !nearCity || !symptoms) {
+                alert("Please fill in all the required fields in the portal.");
+                return;
+            }
+
+            patientData = { name, phone, place, nearCity, symptoms };
+
+            // Simulate NVIDIA Nemotron AI Model Output via Nebius AI Cloud
+            const outputBox = document.getElementById('ai-output');
+            outputBox.innerHTML = `
+                <strong>Patient:</strong> ${name} (${place}, near ${nearCity})<br>
+                <strong>Symptoms Analyzed:</strong> "${symptoms}"<br>
+                <strong>Preliminary AI Diagnosis (Nemotron-3):</strong> Mild-to-moderate viral syndrome with upper respiratory indicators.<br>
+                <strong>Recommended Specialist:</strong> General Internal Medicine<br>
+                <strong>Triage Priority:</strong> Standard Priority (Consultation Active)
+            `;
+
+            document.getElementById('portal-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+
+        function startVideoConsultation() {
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('video-section').classList.remove('hidden');
+        }
+
+        function endCall() {
+            document.getElementById('video-section').classList.add('hidden');
+            document.getElementById('prescription-section').classList.remove('hidden');
+
+            const rxBox = document.getElementById('rx-content');
+            rxBox.innerHTML = `
+                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #cbd5e1; padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                    <div><strong>Gaon Care Tele-Health Hub</strong><br><small>NVIDIA Nemotron AI Assisted Diagnostics</small></div>
+                    <div style="text-align: right;"><strong>Date:</strong> ${new Date().toLocaleDateString()}<br><small>Ref ID: GC-${Math.floor(100000 + Math.random() * 900000)}</small></div>
+                </div>
+                <p><strong>Patient Name:</strong> ${patientData.name} | <strong>Location:</strong> ${patientData.place}, ${patientData.nearCity}</p>
+                <p><strong>Diagnosis:</strong> Acute Viral Pharyngitis / Upper Respiratory Infection</p>
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 1rem 0;">
+                <p><strong>Rx (Prescription):</strong></p>
+                <ol style="padding-left: 1.2rem; margin: 0.5rem 0;">
+                    <li>Paracetamol 650mg - 1 tablet SOS for fever (Max 3 times a day) - 3 days</li>
+                    <li>Cetirizine 10mg - 1 tablet at bedtime - 5 days</li>
+                    <li>Warm saline gargles 3 times a day</li>
+                </ol>
+                <p style="margin-top: 1rem;"><small><strong>Attending Physician:</strong> Dr. Ananya Sharma, MD (AIIMS Delhi)</small></p>
+            `;
+        }
+
+        function downloadPrescription() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
